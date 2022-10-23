@@ -15,3 +15,6 @@
                                          symbol))
            identity
            #(get-in % [1 s-key])))
+
+(defn comp' [& fns]
+  (-> fns reverse (apply partial comp)))
