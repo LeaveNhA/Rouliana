@@ -59,19 +59,13 @@
    (partial mapv vec)
    (partial partition-by keyword?)))
 
-#_(def parse-nep
-  (parse-nep' {:parse-fn default-parse-fn
-               :parse-route-map-symbols (constantly identity) #_parse-route-map-symbols
-               :parse-ep classify-data-formation}))
-
-#_(defmethod parse-ep :nep [data]
-  ((comp
-    vec
-    (fn [[url route-map route-data]]
-      (if route-data
-        (concat [url route-map]
-                ((comp (partial mapv vec) (partial partition 2))
-                 route-data))
-        [url route-map]))
-    parse-nep)
-   data))
+(def default-decompile-fn
+  (comp
+   (partial reduce
+            (fn [m [[k] & [[url route-map]]]]
+              (merge m {k {:url url
+                           :route-map route-map}}))
+            {})
+   (partial partition 2)
+   (partial mapv vec)
+   (partial partition-by keyword?)))
