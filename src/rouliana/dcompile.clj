@@ -72,10 +72,20 @@
 (defmethod dcompile-ep :unk [data]
   {:!!! {:type :unknown :data data}})
 
+(defn |> [compiled-routes & entry-keys]
+  (-> entry-keys
+      ((partial interpose :>))
+      vec
+      (#(get-in compiled-routes % :not-found))))
+
 (comment
   (-> real-world-data dcompile-ep :api :>)
 
-  (-> real-world-data dcompile-ep :api :> :candidate :> :comment :> :delete)
+  (-> real-world-data dcompile-ep
+      (|> :api :candidate :comment :delete))
+
+  (->> [:api :candidate :comment :delete]
+       (interpose :>))
 
   (-> real-world-data dcompile-ep clojure.pprint/pprint)
 
