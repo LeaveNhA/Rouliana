@@ -18,7 +18,6 @@
   ((comp
     (partial reduce
              (fn [m [[k] & [[url route-map & [ ctx ]]]]]
-               (println ":NEP" m k url route-map ctx)
                (merge m {k (merge (if ctx
                                     (dcompile-ep ctx)
                                     {})
