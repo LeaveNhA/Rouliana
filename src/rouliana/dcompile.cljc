@@ -73,3 +73,14 @@
       ((partial interpose :>))
       vec
       (#(get-in compiled-routes % :not-found))))
+
+(defn |>> [compiled-routes command & additional-arguments]
+  (condp = command
+      :method (get (apply |> compiled-routes additional-arguments) :method :failed-to-parse?)
+      :path (let [compiled compiled-routes
+                  path additional-arguments]
+              (apply str
+                     (mapv (comp :url (partial get-in compiled))
+                           (mapv (comp (partial interpose :>)
+                                       #(take % path))
+                                 (range 1 (-> path count inc))))))))
