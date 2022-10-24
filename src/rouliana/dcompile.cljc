@@ -77,16 +77,3 @@
       ((partial interpose :>))
       vec
       (#(get-in compiled-routes % :not-found))))
-
-(comment
-  (-> real-world-data dcompile-ep :api :>)
-
-  (-> real-world-data dcompile-ep
-      (|> :api :candidate :comment :delete))
-
-  (->> [:api :candidate :comment :delete]
-       (interpose :>))
-
-  (-> real-world-data dcompile-ep clojure.pprint/pprint)
-
-  ((partial mapv (partial mapv (fn [[k v]] [k v]))) (-> real-world-data dcompile-ep :api :> :user (get 0) :>)))
