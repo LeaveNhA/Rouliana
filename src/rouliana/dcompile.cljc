@@ -76,7 +76,7 @@
 
 (defn |>> [compiled-routes command & additional-arguments]
   (condp = command
-      :method (get (apply |> compiled-routes additional-arguments) :method :failed-to-parse?)
+      :method (get (apply |> compiled-routes additional-arguments) :method :wrong-route-key-sequence?)
       :path (let [compiled compiled-routes
                   path additional-arguments]
               (apply str
