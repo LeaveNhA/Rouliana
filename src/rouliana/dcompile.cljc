@@ -6,10 +6,7 @@
    [rouliana.core.uep :as uep :refer [parse-uep']]
    [rouliana.core.iuep :as iuep :refer [parse-iuep']]
    [rouliana.helpers :as helpers :refer [parse-route-map-symbols comp']]
-   [rouliana.example-data :refer [real-world-data]]
    [rouliana.core.ctx :refer [parse-ctx']]))
-
-(ns-unmap *ns* 'dcompile-ep)
 
 (defmulti dcompile-ep
   classify-data-formation)
