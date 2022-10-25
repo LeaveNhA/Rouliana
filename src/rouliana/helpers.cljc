@@ -10,11 +10,12 @@
     (fail-fn value)))
 
 (defn parse-route-map-symbols [s-key]
-  (partial if-fn
-           #(update-in % [1 s-key] (comp resolve
-                                         symbol))
-           identity
-           #(get-in % [1 s-key])))
+  #?(:clj (partial if-fn
+                   #(update-in % [1 s-key] (comp resolve
+                                                 symbol))
+                   identity
+                   #(get-in % [1 s-key]))
+     :cljs identity))
 
 (defn comp' [& fns]
   (-> fns reverse (apply partial comp)))
